@@ -1,5 +1,29 @@
+import 'package:cospace/app_settings/views/notification_screen.dart';
+import 'package:cospace/cospace/views/categories_screen.dart';
+import 'package:cospace/cospace/views/cospace_search_result.dart';
+import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:cospace/shared/shared_widgets/cospace_widget.dart';
+import 'package:cospace/shared/shared_theme/app_colors.dart';
+
+List<Map<String, dynamic>> categories = [
+    {
+      'icon': Icons.people,
+      'title': 'Shared Spaces'
+    },
+    {
+      'icon': Icons.meeting_room,
+      'title': 'Conference'
+    },
+    {
+      'icon': Icons.area_chart,
+      'title': 'Open Space'
+    },
+    {
+      'icon': Icons.bookmark_add,
+      'title': 'Dedicated'
+    },
+  ];
 
 
 class HomePage extends StatefulWidget {
@@ -22,10 +46,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.green,
         actions: [
-          Icon(Icons.notifications, color: Colors.white,)
+          IconButton(
+            icon: Icon(Icons.notifications),
+            iconSize: 30.0,
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationScreen()));
+            },
+          )
         ],
         title: Text('Location', style: TextStyle(color: Colors.white),),
       ),
@@ -33,11 +65,11 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.all(10),
         child: ListView(
           children: [
-            sectonTitle('#Offers for you'),
+            sectonTitle('#Offers for you', SizedBox()),
             buildOffersSection(),
-            sectonTitle('Category'),
+            sectonTitle('Category', CategoriesScreen()),
             buildCategoriesSection(),
-            sectonTitle('Popular Spaces'),
+            sectonTitle('Popular Spaces', SpaceSearchResult(title: 'Popular Spaces')),
             buildPopularSection(),
           ],
         )
@@ -45,11 +77,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  sectonTitle(String title) {
+  sectonTitle(String title, Widget screen) {
     return ListTile(
-      title: Text(title, style: TextStyle(color: Colors.black, fontSize: 20.0),),
-      trailing: Text('See all', style: TextStyle(color: Colors.green),),
-      onTap: () {},
+      title: Text(title, style: AppFonts.primaryBlackFont),
+      trailing: title == '#Offers for you' ? SizedBox() : Text('See all', style: AppFonts.miniGreenFont),
+      onTap: title == '#Offers for you' ? () {} : () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+      },
     );
   }
 
@@ -78,27 +112,33 @@ class _HomePageState extends State<HomePage> {
 
   buildCategoriesSection() {
     return Container(
-      height: 120,
+      height: 135,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          for (int i = 0; i < 5; i ++)
-          Container(
-            width: 80,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    shape: BoxShape.circle
+          for (int i = 0; i < categories.length; i ++)
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SpaceSearchResult(title: categories[i]['title'])));
+            },
+            child: Container(
+              width: 90,
+              margin: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle
+                    ),
+                    padding: EdgeInsets.all(10.0),
+                    alignment: Alignment.center,
+                    child: Icon(categories[i]['icon'], color: Colors.green, size: 50.0),
                   ),
-                  padding: EdgeInsets.all(10.0),
-                  alignment: Alignment.center,
-                  child: Icon(Icons.people, color: Colors.green, size: 50.0),
-                ),
-                Text('Shared Space', textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 15.0)),
-              ],
+                  Text(categories[i]['title'], textAlign: TextAlign.center, style: AppFonts.subBlackFont),
+                ],
+              ),
             ),
           )
         ],

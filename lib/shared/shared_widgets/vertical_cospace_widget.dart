@@ -5,14 +5,14 @@ import 'package:cospace/shared/shared_widgets/overall_rating_widget.dart';
 import 'package:flutter/material.dart';
 
 
-class CospaceWidget extends StatefulWidget {
-  const CospaceWidget({super.key});
+class VerticalCospaceWidget extends StatefulWidget {
+  const VerticalCospaceWidget({super.key});
 
   @override
-  State<CospaceWidget> createState() => _CospaceWidgetState();
+  State<VerticalCospaceWidget> createState() => _VerticalCospaceWidgetState();
 }
 
-class _CospaceWidgetState extends State<CospaceWidget> {
+class _VerticalCospaceWidgetState extends State<VerticalCospaceWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,29 +25,41 @@ class _CospaceWidgetState extends State<CospaceWidget> {
       padding: EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Container(
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              image: DecorationImage(
-                image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s'),
-                fit: BoxFit.fill
+          Row(
+            children: [
+              Container(
+                height: 150,
+                width: MediaQuery.of(context).size.width / 2.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  image: DecorationImage(
+                    image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s'),
+                    fit: BoxFit.fill
+                  ),
+                ),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    OverallRatingWidget(),
+                    FavWidget()
+                  ],
+                ),
               ),
-            ),
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                OverallRatingWidget(),
-                FavWidget()
-              ],
-            ),
-          ),
-          ListTile(
-            title: Text('Shared Space', style: AppFonts.miniGreenFont),
-            subtitle: Text('Workhub Connect', style: AppFonts.primaryBlackFont),
-            trailing: Text('80EGP/H', style: AppFonts.miniGreenFont),
+              Container(
+                margin: EdgeInsets.only(left: 10.0),
+                width: MediaQuery.of(context).size.width / 2.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Shared Space', style: AppFonts.miniGreenFont),
+                    Text('Workhub Connect', softWrap: true, style: AppFonts.primaryBlackFont),
+                    Text('80EGP/H', style: AppFonts.miniGreenFont),
+                  ],
+                ),
+              ),
+            ],
           ),
           Divider(endIndent: 10.0, indent: 10.0, thickness: 0.5, color: Colors.grey),
           Row(
