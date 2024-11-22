@@ -5,14 +5,23 @@
 
 
   Next Session ( Fir, Sat )
-    - BottomNavigationBar
+    - profileData Screen
+    - Settings Screen
+    - Invite Friends Screen
+    - Paymnet Method Screen 
+    - Help Center Screen
+    - Space Details Screen
+    - Write Review Screen
+    - Book Now ( Screens )
+    - ERecept
+    - Cancel Booking
     - Complete Screens
 
 */
 
 
+import 'package:cospace/app_settings/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:cospace/app_settings/views/home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: BottomNavBar(),
     );
   }
 }

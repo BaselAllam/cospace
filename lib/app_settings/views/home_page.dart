@@ -1,7 +1,7 @@
-import 'package:cospace/app_settings/views/notification_screen.dart';
 import 'package:cospace/cospace/views/categories_screen.dart';
 import 'package:cospace/cospace/views/cospace_search_result.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
+import 'package:cospace/shared/shared_widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cospace/shared/shared_widgets/cospace_widget.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
@@ -48,18 +48,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.backgroundColor,
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            iconSize: 30.0,
-            color: Colors.white,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationScreen()));
-            },
-          )
+          NotificationWidget()
         ],
-        title: Text('Location', style: TextStyle(color: Colors.white),),
+        title: Text('CoSpace', style: AppFonts.primaryBlackFont),
+        centerTitle: false,
       ),
       body: Container(
         margin: EdgeInsets.all(10),

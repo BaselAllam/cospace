@@ -4,9 +4,13 @@ import 'package:cospace/shared/shared_widgets/fav_widget.dart';
 import 'package:cospace/shared/shared_widgets/overall_rating_widget.dart';
 import 'package:flutter/material.dart';
 
+// enum SpaceWidgetScreensName {OngoingBooking, CancelledBooking, CompletedBooking}
 
 class CospaceWidget extends StatefulWidget {
-  const CospaceWidget({super.key});
+
+  final String screenName;
+
+  const CospaceWidget({this.screenName = 'Initial'});
 
   @override
   State<CospaceWidget> createState() => _CospaceWidgetState();
@@ -74,7 +78,74 @@ class _CospaceWidgetState extends State<CospaceWidget> {
                 ],
               ),
             ],
-          )
+          ),
+          if (widget.screenName == 'CancelledBooking')
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextButton(
+              child: Text('Re-book', style: AppFonts.miniWhiteFont),
+              style: TextButton.styleFrom(
+                backgroundColor: AppColors.greenColor,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                fixedSize: Size(200.0, 30.0)
+              ),
+              onPressed: () {}, 
+            ),
+          ),
+          if (widget.screenName == 'CompletedBooking')
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton(
+                  child: Text('Re-Book', style: AppFonts.miniWhiteFont),
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.greenColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    fixedSize: Size(100.0, 30.0)
+                  ),
+                  onPressed: () {}, 
+                ),
+                TextButton(
+                  child: Text('E-Ticket', style: AppFonts.miniWhiteFont),
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.greenColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    fixedSize: Size(100.0, 30.0)
+                  ),
+                  onPressed: () {}, 
+                ),
+              ],
+            ),
+          ),
+          if (widget.screenName == 'OngoingBooking')
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton(
+                  child: Text('Timer', style: AppFonts.miniWhiteFont),
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.greenColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    fixedSize: Size(100.0, 30.0)
+                  ),
+                  onPressed: () {}, 
+                ),
+                TextButton(
+                  child: Text('E-Ticket', style: AppFonts.miniWhiteFont),
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.greenColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    fixedSize: Size(100.0, 30.0)
+                  ),
+                  onPressed: () {}, 
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
