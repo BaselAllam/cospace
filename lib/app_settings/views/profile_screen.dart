@@ -1,6 +1,7 @@
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/notification_widget.dart';
+import 'package:cospace/user/views/invite_firends_screen.dart';
 import 'package:cospace/user/views/privacy_policy_sreen.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     {
       'icon': Icons.person_add,
       'title': 'Invite Friends',
-      // 'screen': ProfileDataScreen()
+      'screen': InviteFirendsScreen()
     },
   ];
 

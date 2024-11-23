@@ -8,6 +8,7 @@ class AppFonts {
   static TextStyle primaryNormalBlackFont = TextStyle(color: AppColors.blackColor, fontSize: 20.0);
   static TextStyle primaryRedFont = TextStyle(color: AppColors.redColor, fontSize: 20.0);
   static TextStyle primaryWhiteFont = TextStyle(color: AppColors.whiteColor, fontSize: 20.0);
+  static TextStyle priamryGreenFont = TextStyle(color: AppColors.greenColor, fontSize: 20, fontWeight: FontWeight.bold);
   static TextStyle miniGreenFont = TextStyle(color: AppColors.greenColor, fontSize: 13);
   static TextStyle subGreenFont = TextStyle(color: AppColors.greenColor, fontSize: 15, fontWeight: FontWeight.bold);
   static TextStyle miniWhiteFont = TextStyle(color: AppColors.whiteColor, fontSize: 13);
