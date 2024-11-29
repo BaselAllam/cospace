@@ -1,8 +1,12 @@
+import 'package:cospace/app_settings/views/settings_screen.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
+import 'package:cospace/shared/shared_widgets/custom_btn_widget.dart';
 import 'package:cospace/shared/shared_widgets/notification_widget.dart';
 import 'package:cospace/user/views/invite_firends_screen.dart';
 import 'package:cospace/user/views/privacy_policy_sreen.dart';
+import 'package:cospace/user/views/profile_data_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -20,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     {
       'icon': Icons.person,
       'title': 'Profile Data',
-      // 'screen': ProfileDataScreen()
+      'screen': ProfileDataScreen()
     },
     {
       'icon': Icons.wallet,
@@ -30,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     {
       'icon': Icons.settings,
       'title': 'Settings',
-      // 'screen': ProfileDataScreen()
+      'screen': SettingsScreen()
     },
     {
       'icon': Icons.info_outline,
@@ -78,12 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     )
                   ),
                   alignment: Alignment.bottomRight,
-                  child: IconButton(
-                    icon: Icon(Icons.add_a_photo),
-                    color: AppColors.greenColor,
-                    iconSize: 30.0,
-                    onPressed: () {},
-                  ),
                 ),
               ],
             ),
@@ -108,7 +106,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTile(
               leading: Icon(Icons.logout, color: AppColors.redColor, size: 30.0),
               title: Text('Logout', style: AppFonts.primaryRedFont),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoAlertDialog(
+                      title: Text('Attention', style: AppFonts.primaryRedFont,),
+                      content: Text('Are you sure you want to logout ?', style: AppFonts.primaryNormalBlackFont,),
+                      actions: [
+                        CustomBtnWidget(title: 'Yes', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.primaryRedFont),
+                        CustomBtnWidget(title: 'No', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.priamryGreyFont),
+                      ],
+                    );
+                  }
+                );
+              },
             ),
           ],
         ),

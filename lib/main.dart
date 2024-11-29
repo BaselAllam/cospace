@@ -1,18 +1,17 @@
 
 /*
 
+  - Packages
+    - Shared Preferences
+    - image_picker
+    - google maps
+    - snackBar
 
-  Next Session ( Fir, Sat )
-    - profileData Screen
-    - Settings Screen
-    - Paymnet Method Screen 
-    - Help Center Screen
-    - Space Details Screen
-    - Write Review Screen
-    - Book Now ( Screens )
-    - ERecept
-    - Cancel Booking
-    - Complete Screens
+  Fri & Sat
+    - Intro to StateManagment
+    - Difference Between Approaches
+    - HTTPS & API
+    - App Integration
 
 */
 
