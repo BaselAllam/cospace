@@ -5,7 +5,8 @@ import 'package:cospace/shared/shared_widgets/custom_btn_widget.dart';
 import 'package:cospace/shared/shared_widgets/field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ProfileDataScreen extends StatefulWidget {
   const ProfileDataScreen({super.key});
@@ -21,6 +22,7 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
   TextEditingController emailController = TextEditingController();
   String birthDate = 'Select Date';
   String selectedGender = 'None';
+  File? selectedImg;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +58,12 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: DecorationImage(
+                    image: selectedImg == null ? DecorationImage(
                       image: NetworkImage('https://avatars.githubusercontent.com/u/44323531?v=4'),
                       fit: BoxFit.contain
+                    ) : DecorationImage(
+                      image: FileImage(selectedImg!),
+                      fit: BoxFit.fill
                     )
                   ),
                   alignment: Alignment.bottomRight,
@@ -79,12 +84,24 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
                                 ListTile(
                                   title: Text('Camera', style: AppFonts.primaryNormalBlackFont),
                                   leading: Icon(Icons.camera, color: AppColors.greenColor, size: 20.0),
-                                  onTap: () {},
+                                  onTap: () async {
+                                    XFile? pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
+                                    if (pickedImg != null) {
+                                      selectedImg = File(pickedImg!.path);
+                                      setState(() {});
+                                    }
+                                  },
                                 ),
                                 ListTile(
                                   title: Text('Gallery', style: AppFonts.primaryNormalBlackFont),
                                   leading: Icon(Icons.photo, color: AppColors.greenColor, size: 20.0),
-                                  onTap: () {},
+                                  onTap: () async {
+                                    XFile? pickedImg = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                    if (pickedImg != null) {
+                                      selectedImg = File(pickedImg!.path);
+                                      setState(() {});
+                                    }
+                                  },
                                 ),
                               ],
                             ),

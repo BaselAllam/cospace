@@ -3,8 +3,6 @@
 
   - Packages
     - Shared Preferences
-    - image_picker
-    - google maps
     - snackBar
 
   Fri & Sat
