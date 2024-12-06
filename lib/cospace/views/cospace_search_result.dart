@@ -28,8 +28,8 @@ class _SpaceSearchResultState extends State<SpaceSearchResult> {
         margin: EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            for (int i = 0; i < 10; i++)
-            CospaceWidget()
+            // for (int i = 0; i < 10; i++)
+            // CospaceWidget()
           ],
         ),
       ),

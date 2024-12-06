@@ -44,7 +44,8 @@ class _ProfileDataScreenState extends State<ProfileDataScreen> {
         child: CustomBtnWidget(title: 'Update',
         backgroundColor: AppColors.greenColor,
         textStyle: AppFonts.miniWhiteFont,
-        size: Size(MediaQuery.of(context).size.width / 1.1, 20)
+        size: Size(MediaQuery.of(context).size.width / 1.1, 20),
+        onPress: () {},
       ),
       ),
       body: Container(

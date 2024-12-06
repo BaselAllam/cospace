@@ -36,7 +36,9 @@ class _InviteFirendsScreenState extends State<InviteFirendsScreen> {
                 ),
                 title: Text('Bassel Allam', style: AppFonts.primaryNormalBlackFont),
                 subtitle: Text('201010119118', style: AppFonts.priamryGreyFont),
-                trailing: CustomBtnWidget(title: 'Invite', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(50, 30)),
+                trailing: CustomBtnWidget(title: 'Invite', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(50, 30),
+                onPress: () {},
+                ),
               ),
               Divider(endIndent: 20, indent: 20, thickness: 0.3, color: AppColors.greyColor)
             ],

@@ -1,3 +1,4 @@
+import 'package:cospace/main.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/cospace_widget.dart';
@@ -28,8 +29,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
         margin: EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            for (int i = 0; i < 10; i++)
-            CospaceWidget()
+            for (int i = 0; i < coSpaceController.favSpace.length; i++)
+            CospaceWidget(coSpaceModel: coSpaceController.favSpace[i], index: i,)
           ],
         ),
       ),

@@ -1,10 +1,6 @@
 
 /*
 
-  - Packages
-    - Shared Preferences
-    - snackBar
-
   Fri & Sat
     - Intro to StateManagment
     - Difference Between Approaches
@@ -13,12 +9,13 @@
 
 */
 
-
-import 'package:cospace/app_settings/views/bottom_nav_bar.dart';
+import 'package:cospace/app_settings/views/splash_screen.dart';
+import 'package:cospace/cospace/logic/cospace_cubit.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
+CoSpaceController coSpaceController = CoSpaceController();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -32,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BottomNavBar(),
+      home: SplashScreen(),
     );
   }
 }

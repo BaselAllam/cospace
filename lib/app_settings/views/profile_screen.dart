@@ -8,6 +8,7 @@ import 'package:cospace/user/views/privacy_policy_sreen.dart';
 import 'package:cospace/user/views/profile_data_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -114,8 +115,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: Text('Attention', style: AppFonts.primaryRedFont,),
                       content: Text('Are you sure you want to logout ?', style: AppFonts.primaryNormalBlackFont,),
                       actions: [
-                        CustomBtnWidget(title: 'Yes', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.primaryRedFont),
-                        CustomBtnWidget(title: 'No', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.priamryGreyFont),
+                        CustomBtnWidget(
+                          title: 'Yes', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.primaryRedFont,
+                          onPress: () async {
+                            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                            sharedPreferences.clear();
+                          },
+                          ),
+                        CustomBtnWidget(title: 'No', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.priamryGreyFont,
+                        onPress: () {},
+                        ),
                       ],
                     );
                   }

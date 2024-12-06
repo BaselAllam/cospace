@@ -19,8 +19,8 @@ class _CancelledBookingScreenState extends State<CancelledBookingScreen> {
         margin: EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            for (int i = 0; i < 10; i++)
-            CospaceWidget(screenName: 'CancelledBooking',)
+            // for (int i = 0; i < 10; i++)
+            // CospaceWidget(screenName: 'CancelledBooking',)
           ],
         ),
       ),

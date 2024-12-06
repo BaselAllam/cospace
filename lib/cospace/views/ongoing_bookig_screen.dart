@@ -20,8 +20,8 @@ class _OngoingBookigScreenState extends State<OngoingBookigScreen> {
         margin: EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            for (int i = 0; i < 10; i++)
-            CospaceWidget(screenName: 'OngoingBooking',)
+            // for (int i = 0; i < 10; i++)
+            // CospaceWidget(screenName: 'OngoingBooking',)
           ],
         ),
       ),

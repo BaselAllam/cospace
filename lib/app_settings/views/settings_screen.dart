@@ -70,8 +70,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       title: Text('Attention', style: AppFonts.primaryRedFont,),
                       content: Text('Are you sure you want to Delete Account ?', style: AppFonts.primaryNormalBlackFont,),
                       actions: [
-                        CustomBtnWidget(title: 'Yes', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.primaryRedFont),
-                        CustomBtnWidget(title: 'No', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.priamryGreyFont),
+                        CustomBtnWidget(
+                          title: 'Yes', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.primaryRedFont,
+                          onPress: () {},
+                        ),
+                        CustomBtnWidget(title: 'No', backgroundColor: Colors.transparent, size: Size(100, 30), textStyle: AppFonts.priamryGreyFont,
+                        onPress: () {},
+                        ),
                       ],
                     );
                   }

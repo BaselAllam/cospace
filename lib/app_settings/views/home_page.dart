@@ -1,5 +1,6 @@
 import 'package:cospace/cospace/views/categories_screen.dart';
 import 'package:cospace/cospace/views/cospace_search_result.dart';
+import 'package:cospace/main.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
@@ -146,8 +147,8 @@ class _HomePageState extends State<HomePage> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          for (int i = 0; i < 5; i++)
-          CospaceWidget()
+          for (int i = 0; i < coSpaceController.spaces.length; i++)
+          CospaceWidget(coSpaceModel: coSpaceController.spaces[i],)
         ],
       ),
     );

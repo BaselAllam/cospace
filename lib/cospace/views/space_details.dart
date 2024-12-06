@@ -40,7 +40,10 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
               '8EGP/H',
               style: AppFonts.priamryGreenFont,
             ),
-            CustomBtnWidget(title: 'Book Now', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(100, 30)),
+            CustomBtnWidget(
+              title: 'Book Now', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(100, 30),
+              onPress: () {},
+              ),
           ],
         ),
       ),
@@ -108,7 +111,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
                       shape: BoxShape.circle,
                       color: AppColors.whiteColor
                     ),
-                    child: FavWidget()
+                    // child: FavWidget()
                   ),
                 ],
               )
@@ -343,7 +346,9 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
             '⭐ 4.9 ( 365 reviews )',
             style: AppFonts.subBlackFont,
           ),
-          trailing: CustomBtnWidget(title: 'Add Review', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(100, 30)),
+          trailing: CustomBtnWidget(title: 'Add Review', backgroundColor: AppColors.greenColor, textStyle: AppFonts.miniWhiteFont, size: Size(100, 30),
+          onPress: () {},
+          ),
         ),
           for (int i = 0; i < 10; i++)
           Column(

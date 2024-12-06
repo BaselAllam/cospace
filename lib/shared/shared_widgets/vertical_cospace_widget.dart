@@ -43,7 +43,7 @@ class _VerticalCospaceWidgetState extends State<VerticalCospaceWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OverallRatingWidget(),
-                    FavWidget()
+                    // FavWidget()
                   ],
                 ),
               ),

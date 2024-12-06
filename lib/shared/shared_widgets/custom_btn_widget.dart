@@ -8,7 +8,8 @@ class CustomBtnWidget extends StatefulWidget {
   double radius = 20;
   final TextStyle textStyle;
   final Size size;
-  CustomBtnWidget({required this.title, required this.backgroundColor, required this.size, required this.textStyle, double radius = 20});
+  Function onPress;
+  CustomBtnWidget({required this.title, required this.backgroundColor, required this.size, required this.textStyle, double radius = 20, required Function this.onPress});
 
   @override
   State<CustomBtnWidget> createState() => _CustomBtnWidgetState();
@@ -24,7 +25,9 @@ class _CustomBtnWidgetState extends State<CustomBtnWidget> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.radius)),
         fixedSize: widget.size
       ),
-      onPressed: () {}, 
+      onPressed: () {
+        widget.onPress!();
+      }, 
     );
   }
 }
