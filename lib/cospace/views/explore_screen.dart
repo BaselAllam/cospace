@@ -1,7 +1,13 @@
+import 'dart:developer';
+
+import 'package:cospace/app_settings/logic/app_settings_cubit.dart';
+import 'package:cospace/app_settings/logic/app_settings_state.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/notification_widget.dart';
+import 'package:cospace/shared/shared_widgets/snak.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,11 +21,9 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
 
-  LatLng mapLatLng = LatLng(30.0444, 31.2357);
-
   @override
   void initState() {
-    getUserLocation();
+    BlocProvider.of<AppSettingsCubit>(context).getUserLocation();
     super.initState();
   }
 
@@ -36,21 +40,29 @@ class _ExploreScreenState extends State<ExploreScreen> {
         centerTitle: false,
       ),
       body: Container(
-        child: GoogleMap(
-          initialCameraPosition: CameraPosition(
-            zoom: 12,
-            target: mapLatLng
+        child: BlocListener<AppSettingsCubit, AppSettingsState>(
+          listener: (context, state) {
+            if (state is MapRequestPermissionState) {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar('Kindly Accpet Permission', AppColors.redColor));
+            }
+          },
+          child: BlocBuilder<AppSettingsCubit, AppSettingsState>(
+            builder: (context, state) {
+              if (state is MapLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  zoom: 20,
+                  target: BlocProvider.of<AppSettingsCubit>(context).mapLatLng
+                ),
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+              );
+            },
           ),
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
         ),
       ),
     );
-  }
-
-  getUserLocation() async {
-    Position userPosition = await Geolocator.getCurrentPosition();
-    mapLatLng = LatLng(userPosition.latitude, userPosition.longitude);
-    setState(() {});
   }
 }
