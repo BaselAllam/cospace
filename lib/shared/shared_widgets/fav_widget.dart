@@ -26,7 +26,7 @@ class _FavWidgetState extends State<FavWidget> {
         color: AppColors.redColor,
         iconSize: 20,
         onPressed: () {
-          coSpaceController.handleIsFav(widget.coSpaceModel, favIndex: widget.index);
+          // coSpaceController.handleIsFav(widget.coSpaceModel, favIndex: widget.index);
         },
       )
     );

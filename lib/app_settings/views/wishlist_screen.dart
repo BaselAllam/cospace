@@ -27,12 +27,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
       ),
       body: Container(
         margin: EdgeInsets.all(10.0),
-        child: ListView(
-          children: [
-            for (int i = 0; i < coSpaceController.favSpace.length; i++)
-            CospaceWidget(coSpaceModel: coSpaceController.favSpace[i], index: i,)
-          ],
-        ),
+        // child: ListView(
+        //   children: [
+        //     for (int i = 0; i < coSpaceController.favSpace.length; i++)
+        //     CospaceWidget(coSpaceModel: coSpaceController.favSpace[i], index: i,)
+        //   ],
+        // ),
       ),
     );
   }

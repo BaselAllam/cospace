@@ -1,6 +1,8 @@
 import 'package:cospace/app_settings/views/bottom_nav_bar.dart';
+import 'package:cospace/cospace/logic/cospace_cubit.dart';
 import 'package:cospace/user/views/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -35,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
       return;
     }
+    BlocProvider.of<CoSpaceCubit>(context).getBanners();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBar()));
     return;
   }

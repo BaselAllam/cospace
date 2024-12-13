@@ -1,3 +1,5 @@
+import 'package:cospace/cospace/logic/cospace_cubit.dart';
+import 'package:cospace/cospace/logic/cospace_state.dart';
 import 'package:cospace/cospace/views/categories_screen.dart';
 import 'package:cospace/cospace/views/cospace_search_result.dart';
 import 'package:cospace/main.dart';
@@ -6,6 +8,7 @@ import 'package:cospace/shared/shared_widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cospace/shared/shared_widgets/cospace_widget.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 List<Map<String, dynamic>> categories = [
     {
@@ -35,14 +38,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  List<String> images = [
-    'https://images.pexels.com/photos/29101851/pexels-photo-29101851/free-photo-of-scenic-autumn-road-through-a-forest.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    'https://images.pexels.com/photos/17798437/pexels-photo-17798437/free-photo-of-house-between-forest-and-lake.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    'https://images.pexels.com/photos/28865271/pexels-photo-28865271/free-photo-of-cozy-armchair-in-lush-indoor-greenhouse-setting.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    'https://images.pexels.com/photos/27019303/pexels-photo-27019303.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    'https://images.pexels.com/photos/29187003/pexels-photo-29187003/free-photo-of-couple-strolling-through-a-vibrant-autumn-forest.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,22 +80,32 @@ class _HomePageState extends State<HomePage> {
   buildOffersSection() {
     return Container(
       height: 200,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          for (int i = 0; i < images.length; i++)
-          Container(
-            margin: EdgeInsets.all(10),
-            width: MediaQuery.of(context).size.width / 1.2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: NetworkImage(images[i]),
-                fit: BoxFit.fill
-              )
-            ),
-          ),
-        ],
+      child: BlocBuilder<CoSpaceCubit, CospaceState>(
+        builder: (context, state) {
+          if (state is GetBannersLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is GetBannersSomeThingWentWrongState || state is GetBannersErrorState) {
+            return Center(child: Text('Sorry Some thing went wrong', style: AppFonts.primaryBlackFont));
+          } else {
+            return ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (int i = 0; i < BlocProvider.of<CoSpaceCubit>(context).banners.length; i++)
+                Container(
+                  margin: EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: NetworkImage(BlocProvider.of<CoSpaceCubit>(context).banners[i]),
+                      fit: BoxFit.fill
+                    )
+                  ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
@@ -142,15 +147,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildPopularSection() {
-    return Container(
-      height: 320,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          for (int i = 0; i < coSpaceController.spaces.length; i++)
-          CospaceWidget(coSpaceModel: coSpaceController.spaces[i],)
-        ],
-      ),
-    );
+    // return Container(
+    //   height: 320,
+    //   child: ListView(
+    //     scrollDirection: Axis.horizontal,
+    //     children: [
+    //       for (int i = 0; i < coSpaceController.spaces.length; i++)
+    //       CospaceWidget(coSpaceModel: coSpaceController.spaces[i],)
+    //     ],
+    //   ),
+    // );
   }
 }
