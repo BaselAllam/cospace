@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cospace/cospace/logic/cospace_model.dart';
 import 'package:cospace/cospace/logic/cospace_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,3 +49,27 @@ class CoSpaceCubit extends Cubit<CospaceState> {
     }
   }
 }
+
+
+
+/*
+
+  EndPoint
+    request
+      Method
+        post => add
+        put => update
+        patch => update ( specific field )
+        delete => delete
+        get => getData
+      URL
+        queryParameter
+      Header
+      body
+    response
+    logic
+
+
+basselallam.com/products/id=?adsakjdhfkdfs
+
+*/
