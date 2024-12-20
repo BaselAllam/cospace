@@ -1,13 +1,17 @@
+import 'package:cospace/cospace/logic/cospace_model.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/custom_btn_widget.dart';
 import 'package:cospace/shared/shared_widgets/fav_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 
 class SpaceDetailsScreen extends StatefulWidget {
-  const SpaceDetailsScreen({super.key});
+  CoSpaceModel coSpaceModel;
+  final int index;
+  SpaceDetailsScreen({required this.coSpaceModel, required this.index});
 
   @override
   State<SpaceDetailsScreen> createState() => _SpaceDetailsScreenState();
@@ -15,15 +19,15 @@ class SpaceDetailsScreen extends StatefulWidget {
 
 class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
 
-  List imgs = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s', 'https://images.pexels.com/photos/2566581/pexels-photo-2566581.jpeg?auto=compress&cs=tinysrgb&w=800', 
-  'https://images.pexels.com/photos/6774432/pexels-photo-6774432.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/7651803/pexels-photo-7651803.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/887723/pexels-photo-887723.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/7688173/pexels-photo-7688173.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/2451646/pexels-photo-2451646.jpeg?auto=compress&cs=tinysrgb&w=800', 'https://images.pexels.com/photos/7688164/pexels-photo-7688164.jpeg?auto=compress&cs=tinysrgb&w=800'
-  ];
-
-  String selectedImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s';
+  String? selectedImg;
 
   int selectedTab = 0;
+
+  @override
+  void initState() {
+    selectedImg = widget.coSpaceModel.imgs[0];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '8EGP/H',
+              '${widget.coSpaceModel.prices[0]['price']}EGP/H',
               style: AppFonts.priamryGreenFont,
             ),
             CustomBtnWidget(
@@ -65,7 +69,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
       height: MediaQuery.of(context).size.height / 3.5,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(selectedImg),
+          image: NetworkImage(selectedImg!),
           fit: BoxFit.fill
         )
       ),
@@ -111,7 +115,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
                       shape: BoxShape.circle,
                       color: AppColors.whiteColor
                     ),
-                    // child: FavWidget()
+                    child: FavWidget(coSpaceModel: widget.coSpaceModel)
                   ),
                 ],
               )
@@ -127,10 +131,10 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                for (int i = 0; i < imgs.length; i++)
+                for (int i = 0; i < widget.coSpaceModel.imgs.length; i++)
                 InkWell(
                   onTap: () {
-                    selectedImg = imgs[i];
+                    selectedImg = widget.coSpaceModel.imgs[i];
                     setState(() {});
                   },
                   child: Container(
@@ -140,7 +144,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       image: DecorationImage(
-                        image: NetworkImage(imgs[i]),
+                        image: NetworkImage(widget.coSpaceModel.imgs[i]),
                         fit: BoxFit.fill
                       )
                     ),
@@ -153,7 +157,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                     image: DecorationImage(
-                      image: NetworkImage('https://images.pexels.com/photos/2566581/pexels-photo-2566581.jpeg?auto=compress&cs=tinysrgb&w=800'),
+                      image: NetworkImage(widget.coSpaceModel.imgs.last),
                       fit: BoxFit.fill,
                       colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.5),
@@ -184,7 +188,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
               borderRadius: BorderRadius.circular(5),
             ),
             padding: EdgeInsets.all(5.0),
-            child: Text('Open Space', style: AppFonts.miniGreenFont),
+            child: Text(widget.coSpaceModel.prices[0]['serviceName'], style: AppFonts.miniGreenFont),
           ),
           Text(
             '⭐ 4.9 ( 365 reviews )',
@@ -197,8 +201,8 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
 
   buildTitleSection() {
     return ListTile(
-      title: Text('Machinfy Workspace', style: AppFonts.primaryBlackFont),
-      subtitle: Text('Cairo, Egypt', style: AppFonts.priamryGreyFont),
+      title: Text(widget.coSpaceModel.spaceName, style: AppFonts.primaryBlackFont),
+      subtitle: Text(widget.coSpaceModel.spaceLocation['address'], style: AppFonts.priamryGreyFont),
       trailing: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -279,14 +283,14 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          for (int i = 0; i < 20; i++)
+          for (int i = 0; i < widget.coSpaceModel.imgs.length; i++)
           InkWell(
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 image: DecorationImage(
-                  image: NetworkImage(imgs[0]),
+                  image: NetworkImage(widget.coSpaceModel.imgs[i]),
                   fit: BoxFit.fill
                 )
               ),
@@ -330,7 +334,7 @@ class _SpaceDetailsScreenState extends State<SpaceDetailsScreen> {
           SizedBox(height: 30.0),
           ListTile(
             title: Text('Description', style: AppFonts.primaryNormalBlackFont),
-            subtitle: Text('a great workspace i enojoed there', style: AppFonts.priamryGreyFont),
+            subtitle: Text(widget.coSpaceModel.bio, style: AppFonts.priamryGreyFont),
           ),
         ],
       ),

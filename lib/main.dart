@@ -1,11 +1,3 @@
-
-/*
-
-  Fri & Sat
-    - Complete App Integration
-
-*/
-
 import 'package:cospace/app_settings/logic/app_settings_cubit.dart';
 import 'package:cospace/app_settings/views/splash_screen.dart';
 import 'package:cospace/cospace/logic/cospace_cubit.dart';

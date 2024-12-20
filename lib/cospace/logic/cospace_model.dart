@@ -1,11 +1,25 @@
 
 
 class CoSpaceModel {
+  String id;
   String spaceName;
-  double rate;
+  String bio;
   bool isFav;
-  double price;
-  String img;
+  List prices;
+  List imgs;
+  Map spaceLocation;
 
-  CoSpaceModel({required this.spaceName, required this.rate, required this.isFav, required this.price, required this.img});
+  CoSpaceModel({required this.id, required this.spaceName, required this.bio, required this.isFav, required this.prices, required this.imgs, required this.spaceLocation});
+
+  factory CoSpaceModel.fromJson(String id, Map v) {
+    return CoSpaceModel(
+      id: id,
+      spaceName: v['coSpaceName'],
+      isFav: false,
+      prices: v['prices'],
+      imgs: v['imgs'],
+      bio: v['bio'],
+      spaceLocation: v['spaceLocation']
+    );
+  }
 }

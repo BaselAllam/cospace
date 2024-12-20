@@ -147,15 +147,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildPopularSection() {
-    // return Container(
-    //   height: 320,
-    //   child: ListView(
-    //     scrollDirection: Axis.horizontal,
-    //     children: [
-    //       for (int i = 0; i < coSpaceController.spaces.length; i++)
-    //       CospaceWidget(coSpaceModel: coSpaceController.spaces[i],)
-    //     ],
-    //   ),
-    // );
+    return Container(
+      height: 320,
+      child: BlocBuilder<CoSpaceCubit, CospaceState>(
+        builder: (context, state) {
+          if (state is GetSpacesLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is GetSpacesErrorState || state is GetSpacesSomeThingWentWrongState) {
+            return Center(child: Text('Some thing went wrong', style: AppFonts.primaryBlackFont,));
+          } else if (BlocProvider.of<CoSpaceCubit>(context).spaces.isEmpty) {
+            return Center(child: Text('No Spaces Found Now', style: AppFonts.primaryBlackFont,));
+          } else {
+            return ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (int i = 0; i < BlocProvider.of<CoSpaceCubit>(context).spaces.length; i++)
+                CospaceWidget(coSpaceModel: BlocProvider.of<CoSpaceCubit>(context).spaces[i])
+              ],
+            );
+          }
+        },
+      ),
+    );
   }
 }

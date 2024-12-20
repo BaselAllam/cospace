@@ -38,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
     BlocProvider.of<CoSpaceCubit>(context).getBanners();
+    BlocProvider.of<CoSpaceCubit>(context).getSpaces();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBar()));
     return;
   }

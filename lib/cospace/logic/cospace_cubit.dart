@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cospace/cospace/logic/cospace_model.dart';
 import 'package:cospace/cospace/logic/cospace_state.dart';
+import 'package:cospace/shared/utils/app_assets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,24 +11,26 @@ class CoSpaceCubit extends Cubit<CospaceState> {
 
   CoSpaceCubit() : super(CoSpaceInitState());
 
-  List<CoSpaceModel> _spaces = [
-    CoSpaceModel(spaceName: 'Machinfy', rate: 4.7, isFav: false, price: 200, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s'),
-    CoSpaceModel(spaceName: 'CLS', rate: 4.8, isFav: true, price: 150, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s'),
-    CoSpaceModel(spaceName: 'ItShare', rate: 4.9, isFav: false, price: 300, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsF4Ii2dgdzrnorL6LaqjE5l2Osr0hFVVL2A&s'),
-  ];
+  List<CoSpaceModel> _spaces = [];
   List<CoSpaceModel> get spaces => _spaces;
 
   List<CoSpaceModel> _favSpaces = [];
   List<CoSpaceModel> get favSpace => _favSpaces;
 
-  void handleIsFav(CoSpaceModel cospaceModel, {int? favIndex}) {
-    cospaceModel.isFav = !cospaceModel.isFav;
-    if (cospaceModel.isFav) {
+  void handleIsFav(CoSpaceModel cospaceModel) {
+    if (!cospaceModel.isFav) {
+      cospaceModel.isFav = true;
       _favSpaces.add(cospaceModel);
     } else {
       cospaceModel.isFav = false;
-      _favSpaces.removeAt(favIndex!);
+      for (int i = 0; i < _favSpaces.length; i++) {
+        if (_favSpaces[i].id == cospaceModel.id) {
+          _favSpaces.removeAt(i);
+          break;
+        }
+      }
     }
+    emit(HandleIsFavState());
   }
 
   List<String> _banners = [];
@@ -34,7 +39,7 @@ class CoSpaceCubit extends Cubit<CospaceState> {
   Future<void> getBanners () async {
     emit(GetBannersLoadingState());
     try {
-      http.Response response = await http.get(Uri.parse('https://cospace-795df-default-rtdb.firebaseio.com/banners.json'));
+      http.Response response = await http.get(Uri.parse('${AppAssets.domain}/banners.json'));
       if (response.statusCode == 200) {
         var resData = json.decode(response.body);
         resData.forEach((k, v) {
@@ -48,28 +53,24 @@ class CoSpaceCubit extends Cubit<CospaceState> {
       emit(GetBannersSomeThingWentWrongState());
     }
   }
+
+  Future<void> getSpaces() async {
+    emit(GetSpacesLoadingState());
+    try {
+      http.Response response = await http.get(Uri.parse('${AppAssets.domain}/cospaces.json'));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        data.forEach((k, v) {
+          _spaces.add(CoSpaceModel.fromJson(k, v));
+        });
+        log(_spaces.length.toString());
+        emit(GetSpacesSuccessState());
+      } else {
+        emit(GetSpacesErrorState());
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(GetSpacesSomeThingWentWrongState());
+    }
+  }
 }
-
-
-
-/*
-
-  EndPoint
-    request
-      Method
-        post => add
-        put => update
-        patch => update ( specific field )
-        delete => delete
-        get => getData
-      URL
-        queryParameter
-      Header
-      body
-    response
-    logic
-
-
-basselallam.com/products/id=?adsakjdhfkdfs
-
-*/

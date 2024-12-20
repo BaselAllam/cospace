@@ -23,7 +23,7 @@ class _CospaceWidgetState extends State<CospaceWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => SpaceDetailsScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => SpaceDetailsScreen(coSpaceModel: widget.coSpaceModel, index: widget.index)));
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 1.2,
@@ -40,7 +40,7 @@ class _CospaceWidgetState extends State<CospaceWidget> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 image: DecorationImage(
-                  image: NetworkImage(widget.coSpaceModel.img),
+                  image: NetworkImage(widget.coSpaceModel.imgs[0]),
                   fit: BoxFit.fill
                 ),
               ),
@@ -55,9 +55,9 @@ class _CospaceWidgetState extends State<CospaceWidget> {
               ),
             ),
             ListTile(
-              title: Text('Shared Space', style: AppFonts.miniGreenFont),
+              title: Text(widget.coSpaceModel.prices[0]['serviceName'], style: AppFonts.miniGreenFont),
               subtitle: Text(widget.coSpaceModel.spaceName, style: AppFonts.primaryBlackFont),
-              trailing: Text('${widget.coSpaceModel.price}EGP/H', style: AppFonts.miniGreenFont),
+              trailing: Text('${widget.coSpaceModel.prices[0]['price']}EGP/H', style: AppFonts.miniGreenFont),
             ),
             Divider(endIndent: 10.0, indent: 10.0, thickness: 0.5, color: Colors.grey),
             Row(
