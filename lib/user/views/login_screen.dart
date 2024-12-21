@@ -1,9 +1,13 @@
 import 'package:cospace/app_settings/views/bottom_nav_bar.dart';
+import 'package:cospace/cospace/logic/cospace_cubit.dart';
 import 'package:cospace/shared/shared_theme/app_colors.dart';
 import 'package:cospace/shared/shared_theme/app_fonts.dart';
 import 'package:cospace/shared/shared_widgets/snak.dart';
+import 'package:cospace/user/logic/user_cubit.dart';
+import 'package:cospace/user/logic/user_state.dart';
 import 'package:cospace/user/views/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -98,22 +102,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {},
               )
             ),
-            TextButton(
-              child: Text('Login', style: AppFonts.miniWhiteFont),
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.greenColor,
-                fixedSize: Size(0.0, 50.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-              ),
-              onPressed: () async {
-                if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Email & Password Required', Colors.red));
-                } else {
+            BlocConsumer<UserCubit, UserState>(
+              listener: (context, state) async {
+                if (state is UserLoginErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Invalid Credientls', AppColors.redColor));
+                } else if (state is UserLoginSomeThignWentWrongState) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Some Thing went wrong!', AppColors.redColor));
+                } else if (state is UserLoginSuccessState) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Login Success', AppColors.greenColor));
                   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                   sharedPreferences.setBool('isLoggedIn', true);
+                  BlocProvider.of<CoSpaceCubit>(context).getBanners();
+                  BlocProvider.of<CoSpaceCubit>(context).getSpaces();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBar()));
                 }
               },
+              builder: (context, state) => TextButton(
+                child: state is UserLoginLoadingState ? CircularProgressIndicator() : Text('Login', style: AppFonts.miniWhiteFont),
+                style: TextButton.styleFrom(
+                  backgroundColor: AppColors.greenColor,
+                  fixedSize: Size(0.0, 50.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                ),
+                onPressed: state is UserLoginLoadingState ? () {} : () async {
+                  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar('Email & Password Required', Colors.red));
+                  } else {
+                    await BlocProvider.of<UserCubit>(context).loginUser(emailController.text, passwordController.text);
+                  }
+                },
+              ),
             ),
             SizedBox(height: 50.0),
             Align(

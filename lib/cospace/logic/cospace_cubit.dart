@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cospace/cospace/logic/cospace_model.dart';
 import 'package:cospace/cospace/logic/cospace_state.dart';
 import 'package:cospace/shared/utils/app_assets.dart';
@@ -7,9 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class CoSpaceCubit extends Cubit<CospaceState> {
 
   CoSpaceCubit() : super(CoSpaceInitState());
+
+  Map _wishlistData = {};
 
   List<CoSpaceModel> _spaces = [];
   List<CoSpaceModel> get spaces => _spaces;
@@ -59,18 +62,38 @@ class CoSpaceCubit extends Cubit<CospaceState> {
     try {
       http.Response response = await http.get(Uri.parse('${AppAssets.domain}/cospaces.json'));
       if (response.statusCode == 200) {
+        await getWishlsit();
         var data = json.decode(response.body);
         data.forEach((k, v) {
-          _spaces.add(CoSpaceModel.fromJson(k, v));
+          bool isFav = false;
+          log(_wishlistData.toString());
+          _wishlistData.forEach((key, value) {
+            if (k == value['spaceId']) {
+              isFav = true;
+            }
+          });
+          CoSpaceModel newCoSpaceModel = CoSpaceModel.fromJson(k, v, isFav);
+          _spaces.add(newCoSpaceModel);
+          if (isFav) _favSpaces.add(newCoSpaceModel);
         });
-        log(_spaces.length.toString());
         emit(GetSpacesSuccessState());
       } else {
         emit(GetSpacesErrorState());
       }
     } catch (e) {
-      log(e.toString());
       emit(GetSpacesSomeThingWentWrongState());
+    }
+  }
+
+  Future<void> getWishlsit() async {
+    try {
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String? uid = sharedPreferences.getString('userId');
+      http.Response response = await http.get(Uri.parse('${AppAssets.domain}/wishlist.json/?orderBy="userId"&equalTo="$uid"'));
+      var data = json.decode(response.body);
+      _wishlistData = data;
+    } catch (e) {
+
     }
   }
 }
