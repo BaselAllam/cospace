@@ -9,3 +9,5 @@ class MapLoadingState extends AppSettingsState {}
 class MapRequestPermissionState extends AppSettingsState {}
 
 class MapSuccessState extends AppSettingsState {}
+
+class ChangeLanguageState extends AppSettingsState {}

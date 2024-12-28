@@ -4,11 +4,15 @@ import 'package:cospace/app_settings/views/profile_screen.dart';
 import 'package:cospace/app_settings/views/wishlist_screen.dart';
 import 'package:cospace/cospace/views/bokkings_screen.dart';
 import 'package:cospace/cospace/views/explore_screen.dart';
+import 'package:cospace/lang/ar.dart';
+import 'package:cospace/lang/en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+Map<String, String> selectedLang = enData;
+String selectedLanguage = 'en';
 
 class AppSettingsCubit extends Cubit<AppSettingsState> {
 
@@ -18,6 +22,17 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     HomePage(), ExploreScreen(), WishlistScreen(), BokkingsScreen(), ProfileScreen()
   ];
   List<Widget> get screens => _screens;
+
+  void changeLang() {
+    if (selectedLanguage == 'en') {
+      selectedLang = arData;
+      selectedLanguage = 'ar';
+    } else {
+      selectedLang = enData;
+      selectedLanguage = 'en';
+    }
+    emit(ChangeLanguageState());
+  }
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -41,4 +56,6 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     _mapLatLng = LatLng(userPosition.latitude, userPosition.longitude);
     emit(MapSuccessState());
   }
+
+  
 }

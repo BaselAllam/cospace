@@ -1,10 +1,12 @@
 import 'package:cospace/app_settings/logic/app_settings_cubit.dart';
+import 'package:cospace/app_settings/logic/app_settings_state.dart';
 import 'package:cospace/app_settings/views/splash_screen.dart';
 import 'package:cospace/cospace/logic/cospace_cubit.dart';
 import 'package:cospace/user/logic/user_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,9 +44,21 @@ class _MyAppState extends State<MyApp> {
           create: (context) => UserCubit(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+      child: BlocBuilder<AppSettingsCubit, AppSettingsState>(
+        builder: (context, state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en'),
+            Locale('ar'),
+          ],
+          locale: Locale(selectedLanguage),
+        ),
       ),
     );
   }
