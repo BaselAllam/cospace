@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           margin: EdgeInsets.all(10.0),
           child: ListView(
             children: [
+              Image.asset('assets/back.jpeg'),
               ListTile(
                 title: Text(selectedLang[LangAssets.wlcWord]!, style: TextStyle(color: AppColors.blackColor, fontSize: 40.0, fontWeight: FontWeight.bold)),
                 subtitle: Text('Login to your account!', style: AppFonts.priamryGreyFont,),
